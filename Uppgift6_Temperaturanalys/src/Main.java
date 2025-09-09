@@ -5,5 +5,6 @@ public class Main
     public static void main(String[] args)
     {
         Uppgift6 uppgift6 = new Uppgift6();
+        uppgift6.ShowThisWeekTemperatureData();
     }
 }
