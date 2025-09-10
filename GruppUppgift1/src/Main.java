@@ -1,14 +1,10 @@
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Main
 {
     public static void main(String[] args)
     {
-        Random rng = new Random();
-        ArrayList<Student> students = new ArrayList<>();
-        ArrayList<Student> studentsWithAverageScore = new ArrayList<>();
-
+        final ArrayList<Student> students = new ArrayList<>();
         final String[] studentNames = StudentNamesList.GetNames();
 
         for (String studentName : studentNames)
@@ -16,47 +12,16 @@ public class Main
             students.add(new Student(studentName));
         }
 
+        final double averageScore = CalculateAverageScore(students);
+        final Student lowestGradeStudent = SortLowestGradeStudent(students);
+        final Student highestGradeStudent = SortHighestGradeStudent(students);
+        final ArrayList<Student> studentsWithAverageScore = GetStudentsWithAboveAverageScore(students, averageScore);
+
         System.out.println();
 
-        for (Student student : students)
+        for (final Student student : students)
         {
             System.out.printf("%s has %d points, grade %s\n", student.GetName(), student.GetResult(), student.GetGrade());
-        }
-
-        double averageScore = 0.0;
-
-        Student lowestGradeStudent = students.getFirst();
-        Student highestGradeStudent = students.getFirst();
-
-        for (Student student : students)
-        {
-            averageScore += student.GetResult();
-        }
-
-        averageScore = averageScore / students.size();
-
-        for (Student student : students)
-        {
-            if (highestGradeStudent.GetResult() < student.GetResult())
-            {
-                highestGradeStudent = student;
-            }
-        }
-
-        for (Student student : students)
-        {
-            if (lowestGradeStudent.GetResult() > student.GetResult())
-            {
-                lowestGradeStudent = student;
-            }
-        }
-
-        for (Student student : students)
-        {
-            if (student.GetResult() >= averageScore)
-            {
-                studentsWithAverageScore.add(student);
-            }
         }
 
         System.out.println();
@@ -69,5 +34,64 @@ public class Main
         {
             System.out.printf("%s (%d), ", student.GetName(), student.GetResult());
         }
+    }
+
+    public static Student SortLowestGradeStudent(ArrayList<Student> aStudentList)
+    {
+        Student lowestGradeStudent = aStudentList.getFirst();
+
+        for (Student student : aStudentList)
+        {
+            if (lowestGradeStudent.GetResult() > student.GetResult())
+            {
+                lowestGradeStudent = student;
+            }
+        }
+
+        return lowestGradeStudent;
+    }
+
+    public static Student SortHighestGradeStudent(ArrayList<Student> aStudentList)
+    {
+        Student highestGradeStudent = aStudentList.getFirst();
+
+        for (Student student : aStudentList)
+        {
+            if (highestGradeStudent.GetResult() > student.GetResult())
+            {
+                highestGradeStudent = student;
+            }
+        }
+
+        return highestGradeStudent;
+    }
+
+    public static double CalculateAverageScore(ArrayList<Student> aStudentList)
+    {
+        double averageScore = 0.0;
+
+        for (Student student : aStudentList)
+        {
+            averageScore += student.GetResult();
+        }
+
+        averageScore = averageScore / aStudentList.size();
+
+        return averageScore;
+    }
+
+    public static ArrayList<Student> GetStudentsWithAboveAverageScore(ArrayList<Student> aStudentList, final double aAverageScore)
+    {
+        ArrayList<Student> studentsWithAverageScore = new ArrayList<>();
+
+        for (Student student : aStudentList)
+        {
+            if (student.GetResult() >= aAverageScore)
+            {
+                studentsWithAverageScore.add(student);
+            }
+        }
+
+        return studentsWithAverageScore;
     }
 }
