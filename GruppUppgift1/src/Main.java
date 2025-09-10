@@ -73,7 +73,7 @@ public class Main
 
         for (Student student : aStudentList)
         {
-            if (highestGradeStudent.GetResult() > student.GetResult())
+            if (highestGradeStudent.GetResult() < student.GetResult())
             {
                 highestGradeStudent = student;
             }
