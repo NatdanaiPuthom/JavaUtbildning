@@ -30,6 +30,7 @@ public class Uppgift6
         ShowAverageTemperatureThisWeek();
         ShowHighestTemperatureThisWeek();
         ShowLowestTemperatureThisWeek();
+        ShowThisWeekGraph();
     }
 
     private void GenerateThisWeekTemperature()
@@ -97,5 +98,21 @@ public class Uppgift6
         }
 
         System.out.printf("Lowest temperature this week: %.2f%n", lowestTemperature);
+    }
+
+    private void ShowThisWeekGraph()
+    {
+        System.out.println();
+
+        final double degreesPerStar = 2.0;
+
+        for (int i = 0; i < myDailyTemperature.length; i++)
+        {
+            final double temperature = myDailyTemperature[i];
+            final int stars = (int) Math.floor(Math.max(0.0, temperature / degreesPerStar));
+            final String bar = "*".repeat(stars);
+
+            System.out.printf("%-9s | %-15s (%.1f °C)%n", eDay.values()[i], bar, temperature);
+        }
     }
 }
