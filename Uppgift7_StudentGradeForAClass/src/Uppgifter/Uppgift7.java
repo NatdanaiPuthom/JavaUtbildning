@@ -1,17 +1,24 @@
 package Uppgifter;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Uppgift7
 {
     public void Task()
     {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("How many students?: ");
-        int studentAmount = scanner.nextInt();
+        final int studentAmount = 5;
 
         ArrayList<Double> students = new ArrayList<Double>(studentAmount);
+
+        String[] studentNames =
+                {
+                        "Natdanai"
+                        , "Sebastian"
+                        , "Alexander"
+                        , "James"
+                        , "Valentin"
+                };
+
+        
     }
 }
