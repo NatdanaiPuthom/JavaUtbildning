@@ -9,7 +9,7 @@ public class StudentNamesList
                     , "Valentin"
                     , "Ibrahim"
                     , "Bills"
-                    , "MicrosoftIsShit"
+                    , "Natalie"
             };
 
     public static String[] GetNames()

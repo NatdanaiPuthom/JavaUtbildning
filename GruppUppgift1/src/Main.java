@@ -12,10 +12,12 @@ public class Main
             students.add(new Student(studentName));
         }
 
+        final String studentToSearch = "Nat";
         final double averageScore = CalculateAverageScore(students);
         final Student lowestGradeStudent = SortLowestGradeStudent(students);
         final Student highestGradeStudent = SortHighestGradeStudent(students);
         final ArrayList<Student> studentsWithAverageScore = GetStudentsWithAboveAverageScore(students, averageScore);
+        final ArrayList<Student> studentsFound = SearchForStudents(students, studentToSearch);
 
         System.out.println();
 
@@ -39,6 +41,12 @@ public class Main
 
         System.out.println("\n\nSorted Student:");
         for (Student student : sortedStudents)
+        {
+            System.out.printf("%-20s: %d\n", student.GetName(), student.GetResult());
+        }
+
+        System.out.printf("%nSearched students: %s%n",studentToSearch);
+        for (Student student : studentsFound)
         {
             System.out.printf("%-20s: %d\n", student.GetName(), student.GetResult());
         }
@@ -122,6 +130,21 @@ public class Main
                     students[i] = students[j];
                     students[j] = tempStudent;
                 }
+            }
+        }
+
+        return students;
+    }
+
+    public static ArrayList<Student> SearchForStudents(final ArrayList<Student> aStudentList, final String aName)
+    {
+        final ArrayList<Student> students = new ArrayList<>();
+
+        for (Student student : aStudentList)
+        {
+            if (student.GetName().contains(aName))
+            {
+                students.add(student);
             }
         }
 
