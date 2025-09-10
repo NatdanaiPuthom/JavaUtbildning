@@ -21,7 +21,7 @@ public class Main
 
         for (final Student student : students)
         {
-            System.out.printf("%s has %d points, grade %s\n", student.GetName(), student.GetResult(), student.GetGrade());
+            System.out.printf("%-20s has %d points, grade %s\n", student.GetName(), student.GetResult(), student.GetGrade());
         }
 
         System.out.println();
@@ -33,6 +33,14 @@ public class Main
         for (Student student : studentsWithAverageScore)
         {
             System.out.printf("%s (%d), ", student.GetName(), student.GetResult());
+        }
+
+        Student[] sortedStudents = SortStudentsBasedOnScore(students);
+
+        System.out.println("\n\nSorted Student:");
+        for (Student student : sortedStudents)
+        {
+            System.out.printf("%-20s: %d\n", student.GetName(), student.GetResult());
         }
     }
 
@@ -93,5 +101,30 @@ public class Main
         }
 
         return studentsWithAverageScore;
+    }
+
+    public static Student[] SortStudentsBasedOnScore(ArrayList<Student> aStudentList)
+    {
+        final Student[] students = new Student[aStudentList.size()];
+
+        for (int i = 0; i < aStudentList.size(); i++)
+        {
+            students[i] = aStudentList.get(i);
+        }
+
+        for (int i = 0; i < aStudentList.size(); i++)
+        {
+            for (int j = 0; j < i; j++)
+            {
+                if (students[i].GetResult() < students[j].GetResult())
+                {
+                    Student tempStudent = students[i];
+                    students[i] = students[j];
+                    students[j] = tempStudent;
+                }
+            }
+        }
+
+        return students;
     }
 }
