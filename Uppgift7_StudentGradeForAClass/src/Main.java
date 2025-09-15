@@ -5,7 +5,6 @@ public class Main
     public static void main(String[] args)
     {
         Uppgift7 uppgift7 = new Uppgift7();
-
-
+        uppgift7.Run();
     }
 }
