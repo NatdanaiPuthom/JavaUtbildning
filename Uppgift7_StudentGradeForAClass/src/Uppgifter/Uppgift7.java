@@ -1,6 +1,7 @@
 package Uppgifter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -40,7 +41,16 @@ public class Uppgift7
 
         AssignRandomGrades(studentGrades);
         ShowStudentGrades(studentGrades);
-        CalculateAndPrintStudentsAverageScore(studentGrades);
+
+        final int[] studentAverage = CalculateStudentsAverageScore(studentGrades);
+        PrintStudentsAverage((studentAverage));
+
+        CalculateAmountOfStudentsWithPassedScore(studentGrades, scoreToPassGrade);
+
+        final int bestStudentIndex = FindBestStudent(studentAverage);
+        System.out.printf("%nBest student is %s%n", students.get(bestStudentIndex));
+
+        PrintSortedStudentsAverage(studentAverage, students);
     }
 
     private void AssignRandomGrades(int[][] aStudentGrades)
@@ -71,7 +81,7 @@ public class Uppgift7
         }
     }
 
-    private void CalculateAndPrintStudentsAverageScore(int[][] aStudentGrades)
+    private int[] CalculateStudentsAverageScore(int[][] aStudentGrades)
     {
         int[] studentAverageScore = new int[aStudentGrades.length];
 
@@ -87,14 +97,80 @@ public class Uppgift7
             studentAverageScore[i] /= aStudentGrades[i].length;
         }
 
-        for (int i = 0; i < studentAverageScore.length; i++)
+        return studentAverageScore;
+    }
+
+    private void PrintStudentsAverage(int[] aStudentAverageScore)
+    {
+        for (int i = 0; i < aStudentAverageScore.length; i++)
         {
-            System.out.printf("Student(%d) average score: %d%n", i, studentAverageScore[i]);
+            System.out.printf("Student(%d) average score: %d%n", i, aStudentAverageScore[i]);
         }
     }
 
-    private void CalculateAmountOfStudentsWithPassedScore(final int aScoreToPass)
+    private void CalculateAmountOfStudentsWithPassedScore(final int[][] aStudentGrades, final int aScoreToPass)
     {
-        //int[] passedStudents = new int[aStudentGrades.length];
+        int amountStudentPassed = 0;
+
+        for (int i = 0; i < aStudentGrades.length; i++)
+        {
+            int tempPassed = 0;
+
+            for (int j = 0; j < aStudentGrades[i].length; j++)
+            {
+                if (aStudentGrades[i][j] >= aScoreToPass)
+                {
+                    tempPassed += 1;
+                }
+            }
+
+            if (tempPassed >= 3)
+            {
+                amountStudentPassed += 1;
+            }
+        }
+
+        System.out.println("\nStudent passed: " + amountStudentPassed);
+    }
+
+    private int FindBestStudent(final int[] aStudentAverage)
+    {
+        int highestAverageIndex = 0;
+
+        for (int i = 0; i < aStudentAverage.length; i++)
+        {
+           if (aStudentAverage[i] > highestAverageIndex)
+           {
+               highestAverageIndex = i;
+           }
+        }
+
+        return highestAverageIndex;
+    }
+
+    private void PrintSortedStudentsAverage(final int[] aStudentAverage, ArrayList<String> aStudentsList)
+    {
+        int[] indexMapToStudent;
+        int[] sortedStudentAverage = Arrays.copyOf(aStudentAverage, aStudentAverage.length);
+
+        for (int i = 0; i < aStudentAverage.length; i++)
+        {
+            for (int j = i + 1; j < aStudentAverage.length; j++)
+            {
+                if (aStudentAverage[i] > aStudentAverage[j])
+                {
+                    int temp = aStudentAverage[i];
+                    sortedStudentAverage[i] = aStudentAverage[i];
+                    sortedStudentAverage[j] = temp; //Something's wrong
+                }
+            }
+        }
+
+        System.out.println();
+
+        for (int i = 0; i < sortedStudentAverage.length; i++)
+        {
+            System.out.println(" " + sortedStudentAverage[i]);
+        }
     }
 }
